@@ -1,0 +1,13 @@
+# Logs
+migration_log.txt
+*.log
+
+# Claude Code local files
+.claude/settings.local.json
+.claude/project-context.json
+
+# macOS
+.DS_Store
+
+# Packaged skills
+*.skill
