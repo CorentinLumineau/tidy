@@ -40,6 +40,14 @@ gog gmail search "has:nouserlabels" --max 100 --plain
 
 # Create filter
 gog gmail settings filters create --from "domain.com" --add-label "Label"
+
+# Search by Gmail category (unlabeled only)
+gog gmail search "in:promotions has:nouserlabels -in:spam -in:trash" --max 100 --plain
+gog gmail search "in:social has:nouserlabels -in:spam -in:trash" --max 100 --plain
+gog gmail search "in:updates has:nouserlabels -in:spam -in:trash" --max 100 --plain
+
+# Primary only (exclude all categories)
+gog gmail search "has:nouserlabels -in:promotions -in:social -in:updates -in:forums -in:spam -in:trash" --max 100 --plain
 ```
 
 ## Scripts
@@ -48,16 +56,18 @@ All scripts in `scripts/` support `DRY_RUN=true` for preview mode.
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/categorize_emails.sh` | Label emails by sender domain |
-| `scripts/ai_categorize.sh` | Pattern-match subjects and senders |
+| `scripts/categorize_emails.sh` | Label emails by sender domain (supports `CATEGORY` env var) |
+| `scripts/ai_categorize.sh` | Pattern-match subjects and senders (supports `CATEGORY` env var) |
 | `scripts/migrate_labels.sh` | Migrate old label structure |
 
 ## Best Practices
 
 1. Always dry-run first: `DRY_RUN=true ./scripts/script.sh`
-2. Ask user before executing bulk operations
-3. Keep emails in inbox (don't archive unless asked)
-4. Report results summary after operations
+2. Use category filter: `CATEGORY=promotions DRY_RUN=true ./scripts/ai_categorize.sh`
+   - Options: `promotions`, `social`, `updates`, `primary`, `all`
+3. Ask user before executing bulk operations
+4. Keep emails in inbox (don't archive unless asked)
+5. Report results summary after operations
 
 ## Workflow
 

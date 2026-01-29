@@ -4,9 +4,35 @@
 
 LOG_FILE="migration_log.txt"
 DRY_RUN=${DRY_RUN:-false}
+CATEGORY=${CATEGORY:-"primary"}  # Options: promotions, social, updates, primary, all
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+# Build base search query based on category
+build_category_filter() {
+    case "$CATEGORY" in
+        promotions)
+            echo "in:promotions has:nouserlabels -in:spam -in:trash"
+            ;;
+        social)
+            echo "in:social has:nouserlabels -in:spam -in:trash"
+            ;;
+        updates)
+            echo "in:updates has:nouserlabels -in:spam -in:trash"
+            ;;
+        primary)
+            echo "has:nouserlabels -in:promotions -in:social -in:updates -in:forums -in:spam -in:trash"
+            ;;
+        all)
+            echo "has:nouserlabels -in:spam -in:trash"
+            ;;
+        *)
+            log "ERROR: Unknown category '$CATEGORY'. Valid options: promotions, social, updates, primary, all"
+            exit 1
+            ;;
+    esac
 }
 
 categorize_by_sender() {
@@ -15,12 +41,17 @@ categorize_by_sender() {
 
     log "Categorizing: from:$sender_pattern -> '$target_label'"
 
+    # Build search query with category filter
+    local base_filter
+    base_filter=$(build_category_filter)
+    local search_query="from:$sender_pattern $base_filter -label:$target_label"
+
     # Search for emails from sender that don't already have the target label
     local threads
-    threads=$(gog gmail search "from:$sender_pattern -label:$target_label" --max=500 --plain 2>/dev/null | awk '{print $1}')
+    threads=$(gog gmail search "$search_query" --max=500 --plain 2>/dev/null | awk '{print $1}')
 
     if [ -z "$threads" ]; then
-        log "  No uncategorized threads found from '$sender_pattern'"
+        log "  No uncategorized threads found from '$sender_pattern' in category '$CATEGORY'"
         return 0
     fi
 
@@ -45,6 +76,7 @@ categorize_by_sender() {
 log "=========================================="
 log "Starting Email Categorization by Sender"
 log "DRY_RUN: $DRY_RUN"
+log "CATEGORY: $CATEGORY"
 log "=========================================="
 
 # ============================================

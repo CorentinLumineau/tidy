@@ -4,6 +4,7 @@
 
 LOG_FILE="migration_log.txt"
 DRY_RUN=${DRY_RUN:-false}
+CATEGORY=${CATEGORY:-"primary"}  # Options: promotions, social, updates, primary, all
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
@@ -63,14 +64,44 @@ categorize_email() {
     fi
 }
 
+# Build search query based on category
+build_search_query() {
+    case "$CATEGORY" in
+        promotions)
+            echo "in:promotions has:nouserlabels -in:spam -in:trash"
+            ;;
+        social)
+            echo "in:social has:nouserlabels -in:spam -in:trash"
+            ;;
+        updates)
+            echo "in:updates has:nouserlabels -in:spam -in:trash"
+            ;;
+        primary)
+            echo "has:nouserlabels -in:promotions -in:social -in:updates -in:forums -in:spam -in:trash"
+            ;;
+        all)
+            echo "has:nouserlabels -in:spam -in:trash"
+            ;;
+        *)
+            log "ERROR: Unknown category '$CATEGORY'. Valid options: promotions, social, updates, primary, all"
+            exit 1
+            ;;
+    esac
+}
+
 # Start categorization
 log "=========================================="
 log "Starting AI-based Email Categorization"
 log "DRY_RUN: $DRY_RUN"
+log "CATEGORY: $CATEGORY"
 log "=========================================="
 
+# Get search query for selected category
+SEARCH_QUERY=$(build_search_query)
+log "Search query: $SEARCH_QUERY"
+
 # Get unlabeled emails
-gog gmail search "has:nouserlabels -in:spam -in:trash" --max=200 --plain 2>/dev/null | tail -n +2 | while IFS=$'\t' read -r id date from subject labels thread; do
+gog gmail search "$SEARCH_QUERY" --max=200 --plain 2>/dev/null | tail -n +2 | while IFS=$'\t' read -r id date from subject labels thread; do
     [ -z "$id" ] && continue
     categorize_email "$id" "$from" "$subject"
 done
