@@ -12,6 +12,8 @@ Organize your Gmail inbox with hierarchical labels, automated filters, and AI-as
 ## Prerequisites
 
 - [gog CLI](https://github.com/steipete/gog) - Google services CLI
+- Google Cloud Platform account
+- Gmail account
 
 ## Installation
 
@@ -25,13 +27,64 @@ brew install steipete/tap/gog
 go install github.com/steipete/gog@latest
 ```
 
-### 2. Authenticate
+### 2. Set up Google Cloud Platform
+
+#### Create a GCP Project
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Click **Select a project** → **New Project**
+3. Name it (e.g., "Gmail Organizer") and click **Create**
+4. Select your new project
+
+#### Enable Gmail API
+
+1. Go to **APIs & Services** → **Library**
+2. Search for "Gmail API"
+3. Click **Gmail API** → **Enable**
+
+#### Create OAuth 2.0 Credentials
+
+1. Go to **APIs & Services** → **Credentials**
+2. Click **Create Credentials** → **OAuth client ID**
+3. If prompted, configure the OAuth consent screen:
+   - User Type: **External** (or Internal for Workspace)
+   - App name: "Gmail Organizer"
+   - User support email: your email
+   - Developer contact: your email
+   - Click **Save and Continue** through scopes and test users
+4. Back in Credentials, click **Create Credentials** → **OAuth client ID**
+5. Application type: **Desktop app**
+6. Name: "gog CLI"
+7. Click **Create**
+8. Download the JSON file
+
+#### Configure gog CLI
+
+```bash
+# Set the credentials file path
+export GOG_CREDENTIALS_FILE=/path/to/downloaded-credentials.json
+
+# Or move it to the default location
+mkdir -p ~/.config/gog
+mv ~/Downloads/client_secret_*.json ~/.config/gog/credentials.json
+```
+
+### 3. Authenticate
 
 ```bash
 gog auth login
 ```
 
-### 3. Clone repository
+This opens a browser window. Sign in with your Google account and grant the requested permissions.
+
+### 4. Verify Setup
+
+```bash
+# Test the connection
+gog gmail labels list
+```
+
+### 5. Clone Repository
 
 ```bash
 git clone https://github.com/CorentinLumineau/gmail.git
