@@ -34,8 +34,8 @@ gog auth login
 ### 3. Clone repository
 
 ```bash
-git clone https://github.com/USERNAME/gmail-organizer.git
-cd gmail-organizer
+git clone https://github.com/CorentinLumineau/gmail.git
+cd gmail
 ```
 
 ## Label Hierarchy
