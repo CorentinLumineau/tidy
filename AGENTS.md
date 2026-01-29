@@ -44,17 +44,17 @@ gog gmail settings filters create --from "domain.com" --add-label "Label"
 
 ## Scripts
 
-All scripts support `DRY_RUN=true` for preview mode.
+All scripts in `scripts/` support `DRY_RUN=true` for preview mode.
 
 | Script | Purpose |
 |--------|---------|
-| `categorize_emails.sh` | Label emails by sender domain |
-| `ai_categorize.sh` | Pattern-match subjects and senders |
-| `migrate_labels.sh` | Migrate old label structure |
+| `scripts/categorize_emails.sh` | Label emails by sender domain |
+| `scripts/ai_categorize.sh` | Pattern-match subjects and senders |
+| `scripts/migrate_labels.sh` | Migrate old label structure |
 
 ## Best Practices
 
-1. Always dry-run first: `DRY_RUN=true ./script.sh`
+1. Always dry-run first: `DRY_RUN=true ./scripts/script.sh`
 2. Ask user before executing bulk operations
 3. Keep emails in inbox (don't archive unless asked)
 4. Report results summary after operations

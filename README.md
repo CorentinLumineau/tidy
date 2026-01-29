@@ -54,18 +54,18 @@ cd gmail-organizer
 
 ```bash
 # Preview changes (dry run)
-DRY_RUN=true ./categorize_emails.sh
+DRY_RUN=true ./scripts/categorize_emails.sh
 
 # Execute categorization
-./categorize_emails.sh
+./scripts/categorize_emails.sh
 
 # AI-based pattern matching
-DRY_RUN=true ./ai_categorize.sh
-./ai_categorize.sh
+DRY_RUN=true ./scripts/ai_categorize.sh
+./scripts/ai_categorize.sh
 
 # Migrate old labels to new structure
-DRY_RUN=true ./migrate_labels.sh
-./migrate_labels.sh
+DRY_RUN=true ./scripts/migrate_labels.sh
+./scripts/migrate_labels.sh
 ```
 
 ### Claude Code Integration
@@ -81,7 +81,7 @@ Use commands: `/inbox` or `/gmail-cleanup`
 The shell scripts contain example sender patterns. Edit them to match your inbox:
 
 ```bash
-# In categorize_emails.sh
+# In scripts/categorize_emails.sh
 categorize_by_sender "your-domain.com" "Category/Label"
 ```
 
