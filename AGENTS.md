@@ -1,4 +1,4 @@
-# Gmail Organizer - Agent Instructions
+# Tidy - Agent Instructions
 
 ## Prerequisites
 
@@ -10,8 +10,13 @@ gog gmail labels list
 
 ## Commands
 
+### Gmail
 - `/inbox` - Quick status (uncategorized count)
 - `/gmail-cleanup` - Full workflow (analyze → propose → execute)
+
+### Google Drive
+- `/drive` - Quick status (storage, recent files, files in root)
+- `/drive-cleanup` - Full workflow (analyze → organize → cleanup)
 
 ## Label Hierarchy
 
@@ -50,6 +55,34 @@ gog gmail search "in:updates has:nouserlabels -in:spam -in:trash" --max 100 --pl
 gog gmail search "has:nouserlabels -in:promotions -in:social -in:updates -in:forums -in:spam -in:trash" --max 100 --plain
 ```
 
+## Common gog Drive Commands
+
+```bash
+# Storage info
+gog drive about --plain
+
+# List files
+gog drive ls --plain                              # Root folder
+gog drive ls --parent=FOLDER_ID --plain           # Specific folder
+gog drive ls --query="mimeType='application/vnd.google-apps.folder'" --plain  # Folders only
+
+# Search and filter
+gog drive search "filename" --max=100 --plain
+gog drive ls --query="modifiedTime<'2023-01-01'" --max=100 --plain  # Old files
+gog drive ls --query="quotaBytesUsed>104857600" --max=50 --plain    # Large files (>100MB)
+gog drive ls --query="'root' in parents" --plain                     # Files in root
+
+# File operations
+gog drive get FILE_ID --json                      # Metadata
+gog drive mkdir "Name" --parent=PARENT_ID         # Create folder
+gog drive move FILE_ID --parent=DEST_ID           # Move file
+gog drive delete FILE_ID                          # To trash
+gog drive rename FILE_ID "NewName"                # Rename
+
+# Permissions
+gog drive permissions FILE_ID --plain             # Check sharing
+```
+
 ## Scripts
 
 All scripts in `scripts/` support `DRY_RUN=true` for preview mode.
@@ -59,6 +92,7 @@ All scripts in `scripts/` support `DRY_RUN=true` for preview mode.
 | `scripts/categorize_emails.sh` | Label emails by sender domain (supports `CATEGORY` env var) |
 | `scripts/ai_categorize.sh` | Pattern-match subjects and senders (supports `CATEGORY` env var) |
 | `scripts/migrate_labels.sh` | Migrate old label structure |
+| `scripts/drive_organize.sh` | Create standard Drive folder hierarchy |
 
 ## Best Practices
 

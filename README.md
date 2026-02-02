@@ -1,12 +1,14 @@
-# Gmail Organizer
+# Tidy
 
-Organize your Gmail inbox with hierarchical labels, automated filters, and AI-assisted categorization.
+Organize your Google Workspace - Gmail inbox and Google Drive - with hierarchical labels, automated filters, and AI-assisted categorization.
 
 ## Features
 
-- Hierarchical label system (Finance/, Services/, Projects/, Admin/, Status/)
-- Shell scripts for bulk email categorization
-- AI-powered pattern matching for uncategorized emails
+- Gmail: Hierarchical label system (Finance/, Services/, Projects/, Admin/, Status/)
+- Gmail: Shell scripts for bulk email categorization
+- Gmail: AI-powered pattern matching for uncategorized emails
+- Drive: Structured folder hierarchy organization
+- Drive: Find duplicates, large files, and old files
 - Claude Code integration for interactive cleanup
 
 ## Prerequisites
@@ -33,7 +35,7 @@ go install github.com/steipete/gog@latest
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click **Select a project** → **New Project**
-3. Name it (e.g., "Gmail Organizer") and click **Create**
+3. Name it (e.g., "Tidy") and click **Create**
 4. Select your new project
 
 #### Enable Gmail API
@@ -48,7 +50,7 @@ go install github.com/steipete/gog@latest
 2. Click **Create Credentials** → **OAuth client ID**
 3. If prompted, configure the OAuth consent screen:
    - User Type: **External** (or Internal for Workspace)
-   - App name: "Gmail Organizer"
+   - App name: "Tidy"
    - User support email: your email
    - Developer contact: your email
    - Click **Save and Continue** through scopes and test users
@@ -87,8 +89,8 @@ gog gmail labels list
 ### 5. Clone Repository
 
 ```bash
-git clone https://github.com/CorentinLumineau/gmail.git
-cd gmail
+git clone https://github.com/CorentinLumineau/tidy.git
+cd tidy
 ```
 
 ## Label Hierarchy
