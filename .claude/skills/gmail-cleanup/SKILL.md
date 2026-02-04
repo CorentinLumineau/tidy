@@ -1,17 +1,14 @@
 ---
 name: gmail-cleanup
-description: |
-  Gmail inbox optimization and label management. Analyzes uncategorized emails, suggests new labels and filters, organizes inbox.
-
-  Trigger with /gmail-cleanup when:
-  - Inbox has many uncategorized emails needing organization
-  - Want to create or update Gmail labels
-  - Need to optimize or create filter rules
-  - Want to analyze email patterns for better auto-categorization
-  - Need to bulk-categorize emails by sender/subject patterns
+description: Gmail inbox optimization and label management with category awareness
+user-invocable: true
+disable-model-invocation: false
+allowed-tools: [Bash, Read, Edit, Write]
 ---
 
 # Gmail Cleanup Workflow
+
+Gmail inbox optimization and label management. Analyzes uncategorized emails, suggests new labels and filters, organizes inbox.
 
 ## Prerequisites
 
@@ -19,7 +16,27 @@ description: |
 
 ## Workflow
 
-### 1. Analyze Current State
+### 1. Show Category Breakdown
+
+Count emails per Gmail tab (Promotions, Social, Updates, Primary):
+
+```bash
+# Promotions
+gog gmail search "in:promotions has:nouserlabels -in:spam -in:trash" --max=500 --plain
+
+# Social
+gog gmail search "in:social has:nouserlabels -in:spam -in:trash" --max=500 --plain
+
+# Updates
+gog gmail search "in:updates has:nouserlabels -in:spam -in:trash" --max=500 --plain
+
+# Primary (truly uncategorized)
+gog gmail search "has:nouserlabels -in:promotions -in:social -in:updates -in:forums -in:spam -in:trash" --max=500 --plain
+```
+
+Ask user which category to focus on (or "all").
+
+### 2. Analyze Selected Category
 
 ```bash
 # List labels and filters
@@ -30,21 +47,28 @@ gog gmail settings filters list
 gog gmail search "has:nouserlabels -in:spam -in:trash" --max=100 --plain
 ```
 
-### 2. Identify Patterns
+### 3. Identify Patterns
 
 Analyze uncategorized emails for:
 - Sender domains (group by @domain.com)
 - Subject keywords
 - Frequency
 
+Category-specific suggestions:
+- Promotions -> Services/Shopping, Finance/Subscriptions
+- Social -> Admin/Notifications
+- Updates -> Finance/Payments, Projects/Purchases
+- Primary -> analyze sender/subject patterns
+
 Present as table:
+
 ```
 | Sender Pattern | Count | Suggested Label |
 |----------------|-------|-----------------|
 | @domain.com    | 15    | Category/Label  |
 ```
 
-### 3. Propose Actions (Ask Approval First)
+### 4. Propose Actions (Ask Approval First)
 
 Present proposals:
 
@@ -68,7 +92,7 @@ Found X emails to label
 
 **Wait for user confirmation before executing.**
 
-### 4. Execute Approved Actions
+### 5. Execute Approved Actions
 
 ```bash
 # Create label
@@ -84,9 +108,13 @@ for tid in $THREADS; do
 done
 ```
 
-### 5. Report Results
+### 6. Report Results
 
-Summarize: labels created, filters added, emails categorized, remaining uncategorized.
+Summarize:
+- Labels created
+- Filters added
+- Emails categorized
+- Remaining uncategorized per category
 
 ## Label Hierarchy
 
@@ -109,3 +137,9 @@ Status/      Pending, Important, Archive
 | *game*, *steam* | Services/Gaming |
 | *travel*, *flight* | Projects/Travel |
 | *shop*, *order* | Services/Shopping |
+
+## Best Practices
+
+- Keep all emails in inbox (don't archive unless asked)
+- Always dry-run first with scripts: `DRY_RUN=true ./scripts/script.sh`
+- Use category filter: `CATEGORY=promotions DRY_RUN=true ./scripts/ai_categorize.sh`

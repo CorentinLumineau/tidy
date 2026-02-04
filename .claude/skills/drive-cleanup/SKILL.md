@@ -1,17 +1,14 @@
 ---
 name: drive-cleanup
-description: |
-  Google Drive organization and cleanup. Analyzes storage usage, finds duplicates and large files, organizes files into structured folders.
-
-  Trigger with /drive-cleanup when:
-  - Drive has many files in root needing organization
-  - Want to find and remove duplicates
-  - Need to identify large or old files
-  - Want to organize files into a structured hierarchy
-  - Need to review and clean up shared files
+description: Google Drive organization and cleanup workflow
+user-invocable: true
+disable-model-invocation: false
+allowed-tools: [Bash, Read, Edit, Write]
 ---
 
 # Google Drive Cleanup Workflow
+
+Google Drive organization and cleanup. Analyzes storage usage, finds duplicates and large files, organizes files into structured folders.
 
 ## Prerequisites
 
@@ -87,9 +84,12 @@ gog drive delete FILE_ID
 
 ### 5. Report Results
 
-Summarize: folders created, files moved, storage recovered.
+Summarize:
+- Folders created
+- Files moved
+- Storage recovered
 
-## Folder Hierarchy (SOLID/DRY)
+## Folder Hierarchy
 
 ```
 Drive/
@@ -139,12 +139,6 @@ Drive/
     └── Deprecated/            # No longer needed but kept
 ```
 
-**Principles:**
-- **Single Responsibility:** Each folder has one clear purpose
-- **Open/Closed:** Easy to add subfolders without restructuring
-- **DRY:** No overlapping categories
-- **Interface Segregation:** Shallow where simple, deep where needed
-
 ## Common gog Drive Commands
 
 ```bash
@@ -179,3 +173,8 @@ gog drive permissions FILE_ID --plain             # Check sharing
 | *.jpg, *.png (screenshot) | Media/Photos/Screenshots/ |
 | *.zip, *.dmg | Resources/Software/ |
 | *.pdf (book, manual) | Resources/Ebooks/ |
+
+## Best Practices
+
+- Always ask for confirmation before moving or deleting files
+- Use dry-run first: `DRY_RUN=true ./scripts/drive_organize.sh`
