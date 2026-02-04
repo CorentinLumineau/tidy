@@ -20,29 +20,35 @@ categorize_email() {
     # Example patterns - customize for your inbox:
     # ============================================
 
+    # Job assessments (must be before gaming to catch codingame)
+    if echo "$from $subject" | grep -qiE "codingame|évaluation technique|technical assessment"; then
+        label="Admin/Jobs"
     # Investment/Finance related
-    if echo "$from $subject" | grep -qiE "crypto|investment|dividend|portfolio|trading|broker"; then
+    elif echo "$from $subject" | grep -qiE "crypto|investment|dividend|portfolio|trading|broker|remake|scpi|finpension"; then
         label="Finance/Investments"
-    # Gaming
-    elif echo "$from $subject" | grep -qiE "steam|gaming|game|esport|playstation|xbox"; then
+    # Gaming (specific platforms, not generic "game")
+    elif echo "$from $subject" | grep -qiE "steam|ankama|dofus|playstation|xbox|nintendo"; then
         label="Services/Gaming"
     # Tech/Development
     elif echo "$from $subject" | grep -qiE "github|gitlab|kubernetes|docker|aws|cloud"; then
         label="Services/Tech"
     # Travel
-    elif echo "$from $subject" | grep -qiE "travel|flight|hotel|booking|airbnb|airline"; then
+    elif echo "$from $subject" | grep -qiE "travel|flight|hotel|booking|airbnb|airline|sncf"; then
         label="Projects/Travel"
     # Insurance
-    elif echo "$from $subject" | grep -qiE "insurance|policy|coverage|claim"; then
+    elif echo "$from $subject" | grep -qiE "insurance|policy|coverage|claim|matmut"; then
         label="Finance/Insurance"
-    # Taxes/Admin
-    elif echo "$from $subject" | grep -qiE "tax|government|gov|official"; then
+    # Taxes (specific tax-related terms, not generic gov)
+    elif echo "$from $subject" | grep -qiE "impot|impôt|fiscal|tax|déclaration.*revenus|humanisconseil|mfconseil|AFC Infos"; then
         label="Finance/Taxes"
+    # Legal/Government documents (not taxes)
+    elif echo "$from $subject" | grep -qiE "casier judiciaire|carte d'identité|passeport|ants.gouv|justice.gouv"; then
+        label="Projects/Legal"
     # Automotive
-    elif echo "$from $subject" | grep -qiE "auto|car|vehicle|motor|parking"; then
+    elif echo "$from $subject" | grep -qiE "auto|car|vehicle|motor|parking|ulys"; then
         label="Services/Automotive"
     # Payments/Banking
-    elif echo "$from $subject" | grep -qiE "payment|paypal|bank|invoice|receipt"; then
+    elif echo "$from $subject" | grep -qiE "payment|paypal|bank|invoice|receipt|revolut|wise"; then
         label="Finance/Payments"
     fi
 

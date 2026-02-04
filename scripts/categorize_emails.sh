@@ -86,23 +86,38 @@ log "=========================================="
 # Finance/Investments
 categorize_by_sender "investment-platform.com" "Finance/Investments"
 categorize_by_sender "broker.com" "Finance/Investments"
+categorize_by_sender "remake.fr" "Finance/Investments"
 
 # Finance/Taxes
 categorize_by_sender "tax-authority.gov" "Finance/Taxes"
+categorize_by_sender "humanisconseil.ch" "Finance/Taxes"
+categorize_by_sender "mfconseil.ch" "Finance/Taxes"
+categorize_by_sender "infos.ge.ch" "Finance/Taxes"
 
 # Finance/Insurance
 categorize_by_sender "insurance-provider.com" "Finance/Insurance"
 
+# Admin/Jobs (technical assessments)
+categorize_by_sender "codingame.com" "Admin/Jobs"
+
 # Services/Gaming
 categorize_by_sender "steampowered.com" "Services/Gaming"
 categorize_by_sender "gaming-platform.com" "Services/Gaming"
+categorize_by_sender "ankama.com" "Services/Gaming"
+categorize_by_sender "dofus.com" "Services/Gaming"
 
 # Services/Automotive
 categorize_by_sender "car-tracker.com" "Services/Automotive"
+categorize_by_sender "ulys.com" "Services/Automotive"
 
 # Services/Tech
 categorize_by_sender "github.com" "Services/Tech"
 categorize_by_sender "gitlab.com" "Services/Tech"
+
+# Projects/Legal (government documents, not taxes)
+categorize_by_sender "e-service.admin.ch" "Projects/Legal"
+categorize_by_sender "justice.gouv.fr" "Projects/Legal"
+categorize_by_sender "ants.gouv.fr" "Projects/Legal"
 
 log "=========================================="
 log "Categorization Complete"
