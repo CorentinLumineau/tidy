@@ -17,39 +17,51 @@ categorize_email() {
     local label=""
 
     # ============================================
-    # Example patterns - customize for your inbox:
+    # Pattern-based categorization rules
     # ============================================
 
     # Job assessments (must be before gaming to catch codingame)
-    if echo "$from $subject" | grep -qiE "codingame|évaluation technique|technical assessment"; then
+    if echo "$from $subject" | grep -qiE "codingame|évaluation technique|technical assessment|candidature|entretien.*visio|enova-consulting|extia\.|degetel|michaelpage|linkedin.*job|groupeadequat"; then
         label="Admin/Jobs"
+    # Security/Privacy
+    elif echo "$from $subject" | grep -qiE "incogni|proton.*message|privacy report|authentification|2fa|mfa|accounts\.google\.com|accountprotection\.microsoft"; then
+        label="Admin/Security"
     # Investment/Finance related
-    elif echo "$from $subject" | grep -qiE "crypto|investment|dividend|portfolio|trading|broker|remake|scpi|finpension"; then
+    elif echo "$from $subject" | grep -qiE "crypto|investment|dividend|portfolio|trading|broker|remake|scpi|finpension|mintos|lita\.co|nansen|meilleursagents|immobilier|livestormevents|corum|deblock|solanamobile"; then
         label="Finance/Investments"
     # Gaming (specific platforms, not generic "game")
-    elif echo "$from $subject" | grep -qiE "steam|ankama|dofus|playstation|xbox|nintendo"; then
+    elif echo "$from $subject" | grep -qiE "steam|ankama|dofus|playstation|xbox|nintendo|skinbaron|csgo|counter-strike"; then
         label="Services/Gaming"
     # Tech/Development
-    elif echo "$from $subject" | grep -qiE "github|gitlab|kubernetes|docker|aws|cloud"; then
+    elif echo "$from $subject" | grep -qiE "github|gitlab|kubernetes|docker|aws|cloud|chipolo|opensourceprojects\.dev|windowsinsiderprogram|melvynx|passmail\.net|coder\.com|mapbox|notice\.co|nordvpn|nordaccount|orchids\.app|linear\.app|warp\.dev|f5\.com|vercel|firecrawl"; then
         label="Services/Tech"
-    # Travel
-    elif echo "$from $subject" | grep -qiE "travel|flight|hotel|booking|airbnb|airline|sncf"; then
+    # Travel & Delivery
+    elif echo "$from $subject" | grep -qiE "travel|flight|hotel|booking|airbnb|airline|sncf|monbillet|boxtal"; then
         label="Projects/Travel"
+    # Projects/Purchases (delivery & orders)
+    elif echo "$from $subject" | grep -qiE "chronopost|mondialrelay|colis|livraison|en chemin"; then
+        label="Projects/Purchases"
     # Insurance
-    elif echo "$from $subject" | grep -qiE "insurance|policy|coverage|claim|matmut"; then
+    elif echo "$from $subject" | grep -qiE "insurance|assurance|policy|coverage|claim|matmut|allianz|votreassistance"; then
         label="Finance/Insurance"
     # Taxes (specific tax-related terms, not generic gov)
     elif echo "$from $subject" | grep -qiE "impot|impôt|fiscal|tax|déclaration.*revenus|humanisconseil|mfconseil|AFC Infos"; then
-        label="Finance/Taxes"
-    # Legal/Government documents (not taxes)
-    elif echo "$from $subject" | grep -qiE "casier judiciaire|carte d'identité|passeport|ants.gouv|justice.gouv"; then
+        label="Admin/Impots"
+    # Legal/Government documents (housing, not taxes)
+    elif echo "$from $subject" | grep -qiE "casier judiciaire|carte d'identité|passeport|ants.gouv|justice.gouv|visale|actionlogement|mobili-jeune"; then
         label="Projects/Legal"
+    # Shopping/Retail
+    elif echo "$from $subject" | grep -qiE "columbuscafe|starbucks|digitecgalaxus|galaxus|rakuten|crowdexpert"; then
+        label="Services/Shopping"
     # Automotive
-    elif echo "$from $subject" | grep -qiE "auto|car|vehicle|motor|parking|ulys"; then
+    elif echo "$from $subject" | grep -qiE "auto|car|vehicle|motor|parking|ulys|vinci-autoroutes|autoxperience"; then
         label="Services/Automotive"
     # Payments/Banking
-    elif echo "$from $subject" | grep -qiE "payment|paypal|bank|invoice|receipt|revolut|wise"; then
+    elif echo "$from $subject" | grep -qiE "payment|paypal|bank|invoice|receipt|revolut|wise|klarna"; then
         label="Finance/Payments"
+    # Admin/Notifications (task managers, general notifications)
+    elif echo "$from $subject" | grep -qiE "todoist"; then
+        label="Admin/Notifications"
     fi
 
     if [ -n "$label" ]; then
