@@ -1,5 +1,5 @@
 ---
-name: drive-cleanup
+name: prj-drive-cleanup
 description: Google Drive organization and cleanup workflow
 user-invocable: true
 disable-model-invocation: false

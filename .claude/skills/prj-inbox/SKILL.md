@@ -1,5 +1,5 @@
 ---
-name: inbox
+name: prj-inbox
 description: Quick inbox status check with category breakdown
 user-invocable: true
 disable-model-invocation: false
@@ -59,4 +59,4 @@ Gmail Categories (unlabeled emails):
 
 ### 5. Next Steps
 
-Ask which category to focus on, or offer to run `/gmail-cleanup`.
+Ask which category to focus on, or offer to run `/prj-gmail-cleanup`.

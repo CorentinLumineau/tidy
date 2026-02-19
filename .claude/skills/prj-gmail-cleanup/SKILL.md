@@ -1,5 +1,5 @@
 ---
-name: gmail-cleanup
+name: prj-gmail-cleanup
 description: Gmail inbox optimization and label management with category awareness
 user-invocable: true
 disable-model-invocation: false

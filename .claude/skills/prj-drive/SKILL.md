@@ -1,5 +1,5 @@
 ---
-name: drive
+name: prj-drive
 description: Quick Google Drive status check
 user-invocable: true
 disable-model-invocation: false
@@ -95,4 +95,4 @@ Top 10 Largest Files:
 
 ### 8. Next Steps
 
-Ask if user wants to run `/drive-cleanup` for organization.
+Ask if user wants to run `/prj-drive-cleanup` for organization.
