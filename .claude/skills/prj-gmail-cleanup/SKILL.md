@@ -3,7 +3,7 @@ name: prj-gmail-cleanup
 description: Gmail inbox optimization and label management with category awareness
 user-invocable: true
 disable-model-invocation: false
-allowed-tools: [Bash, Read, Edit, Write]
+allowed-tools: [Bash, Read, Edit, Write, AskUserQuestion]
 ---
 
 # Gmail Cleanup Workflow
@@ -50,11 +50,13 @@ gog gmail search "has:nouserlabels -in:spam -in:trash" --max=100 --plain
 ### 3. Identify Patterns
 
 Analyze uncategorized emails for:
+
 - Sender domains (group by @domain.com)
 - Subject keywords
 - Frequency
 
 Category-specific suggestions:
+
 - Promotions -> Services/Shopping, Finance/Subscriptions
 - Social -> Admin/Notifications
 - Updates -> Finance/Payments, Projects/Purchases
@@ -73,12 +75,14 @@ Present as table:
 Present proposals:
 
 **New Labels:**
+
 ```
 - Finance/Subscriptions
 - Services/Shopping
 ```
 
 **New Filters:**
+
 ```
 | From | Label | Keep in Inbox |
 |------|-------|---------------|
@@ -86,6 +90,7 @@ Present proposals:
 ```
 
 **Emails to Categorize:**
+
 ```
 Found X emails to label
 ```
@@ -111,6 +116,7 @@ done
 ### 6. Report Results
 
 Summarize:
+
 - Labels created
 - Filters added
 - Emails categorized
@@ -128,15 +134,15 @@ Status/      Pending, Important, Archive
 
 ## Common Sender Patterns
 
-| Pattern | Label |
-|---------|-------|
-| *bank*, *credit* | Finance/Payments |
-| *invest*, *crypto* | Finance/Investments |
-| *tax*, *impots* | Finance/Taxes |
-| *github*, *gitlab* | Services/Tech |
-| *game*, *steam* | Services/Gaming |
-| *travel*, *flight* | Projects/Travel |
-| *shop*, *order* | Services/Shopping |
+| Pattern            | Label               |
+| ------------------ | ------------------- |
+| _bank_, _credit_   | Finance/Payments    |
+| _invest_, _crypto_ | Finance/Investments |
+| _tax_, _impots_    | Finance/Taxes       |
+| _github_, _gitlab_ | Services/Tech       |
+| _game_, _steam_    | Services/Gaming     |
+| _travel_, _flight_ | Projects/Travel     |
+| _shop_, _order_    | Services/Shopping   |
 
 ## Best Practices
 
