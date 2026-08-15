@@ -13,10 +13,28 @@ gog gmail labels list
 ### Gmail
 - `/inbox` - Quick status (uncategorized count)
 - `/gmail-cleanup` - Full workflow (analyze → propose → execute)
+- `gmail-analyze` skill - Inbox pattern analysis
+- `gmail-classify` skill - AI email classification
+- `gmail-filter` skill - Create/manage Gmail filters
+- `gmail-label` skill - Create labels + batch-apply
 
 ### Google Drive
 - `/drive` - Quick status (storage, recent files, files in root)
 - `/drive-cleanup` - Full workflow (analyze → organize → cleanup)
+
+## Skills Reference
+
+| Skill | When to load |
+|-------|-------------|
+| `gog` | Any gog CLI command reference |
+| `prj-inbox` | Quick inbox check |
+| `prj-gmail-cleanup` | Full cleanup workflow |
+| `prj-drive` | Quick Drive check |
+| `prj-drive-cleanup` | Full Drive cleanup |
+| `gmail-analyze` | Finding patterns in unlabeled emails |
+| `gmail-classify` | Categorizing emails by content |
+| `gmail-filter` | Setting up automation rules |
+| `gmail-label` | Label taxonomy + batch operations |
 
 ## Label Hierarchy
 
@@ -93,6 +111,7 @@ All scripts in `scripts/` support `DRY_RUN=true` for preview mode.
 | `scripts/ai_categorize.sh` | Pattern-match subjects and senders (supports `CATEGORY` env var) |
 | `scripts/migrate_labels.sh` | Migrate old label structure |
 | `scripts/drive_organize.sh` | Create standard Drive folder hierarchy |
+| `scripts/gmail_core.py` | Python Gmail operations (stdlib only, no deps) |
 
 ## Best Practices
 

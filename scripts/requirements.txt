@@ -1,0 +1,15 @@
+# Gmail Assistant - Python Dependencies
+# Minimal dependencies - uses standard library where possible
+
+# No external dependencies required!
+# The scripts use:
+# - subprocess (stdlib) - for calling gog CLI
+# - json (stdlib) - for parsing JSON output
+# - dataclasses (stdlib) - for data structures
+# - collections (stdlib) - for Counter
+# - typing (stdlib) - for type hints
+
+# Optional: For development/testing
+# pytest>=7.0.0
+# black>=23.0.0
+# mypy>=1.0.0
